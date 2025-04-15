@@ -2,18 +2,20 @@ name: Sync Upstream
 
 on:
   schedule:
-    - cron: '0 3 * * *'  # roda todo dia às 03:00 UTC
-  workflow_dispatch:     # permite rodar manualmente pelo GitHub
+    - cron: '0 3 * * *'  # Roda todo dia às 03:00 UTC
+  workflow_dispatch:     # Permite rodar manualmente
 
 jobs:
   sync:
+    # Só roda se o repositório for o original (seu fork base)
+    if: github.repository == 'victorpowilleit/electron-react-boilerplate'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do seu fork
         uses: actions/checkout@v4
         with:
-          persist-credentials: false  # usamos token manualmente
-          fetch-depth: 0              # necessário para pegar histórico completo
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Configurar Git
         run: |
